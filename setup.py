@@ -61,6 +61,8 @@ requires = [
     'zipstream-new==1.1.7',
     'cachetools==3.1.1',
     'networkx',
+    'decorator==4.4.2',
+    'webargs==5.5.3',
 
 
     # TODO: Move to dev or test dependencies

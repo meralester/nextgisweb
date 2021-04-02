@@ -9,6 +9,9 @@ from PIL import Image, ImageDraw, ImageFont
 from pyramid.response import Response
 from pyramid.httpexceptions import HTTPBadRequest
 
+from webargs import fields
+from webargs.pyramidparser import use_args
+
 from ..compat import Path
 from ..resource import Resource, ResourceNotFound, DataScope, resource_factory, ValidationError
 
@@ -59,11 +62,16 @@ def image_response(img, empty_code, size):
 
     return Response(body_file=buf, content_type='image/png')
 
-
-def tile(request):
-    z = int(request.GET['z'])
-    x = int(request.GET['x'])
-    y = int(request.GET['y'])
+@use_args({
+    "x": fields.Int(required=True),
+    "y": fields.Int(required=True),
+    "z": fields.Int(required=True),
+    "resource": fields.Str(required=True)
+}, locations=("query",))
+def tile(request, args):
+    z = args["z"]
+    x = args["x"]
+    y = args["y"]
 
     p_resource = map(int, filter(None, request.GET['resource'].split(',')))
     p_cache = request.GET.get('cache', 'true').lower() in ('true', 'yes', '1') \
