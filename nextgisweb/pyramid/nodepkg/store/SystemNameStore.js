@@ -2,7 +2,7 @@ import { makeAutoObservable, runInAction } from "mobx";
 import { route } from "@nextgisweb/pyramid/api";
 
 class SystemNameStore {
-  isLoading = false;
+  isLoading = true;
   errors = undefined;
 
   fullName = "";
@@ -15,6 +15,7 @@ class SystemNameStore {
       .then((data) => {
         runInAction(() => {
           this.fullName = data.full_name;
+          this.isLoading = false;
         });
       });
   }
