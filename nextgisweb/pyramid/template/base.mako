@@ -10,7 +10,7 @@
     from nextgisweb.pyramid.util import _
 %>
 <head>
-    <% system_name = request.env.core.system_full_name() %>
+    <% system_name = str(request.env.core.system_full_name()) %>
 
     <title>
         <% page_title = '' %>
