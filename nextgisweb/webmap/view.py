@@ -3,6 +3,8 @@ from urllib.parse import unquote, urljoin, urlparse
 
 from pyramid.renderers import render_to_response
 
+from ..render import ILegendSymbols
+
 from .adapter import WebMapAdapter
 from .model import WebMap, WebMapScope
 from .plugin import WebmapPlugin, WebmapLayerPlugin
@@ -142,6 +144,7 @@ def display(obj, request):
                 minScaleDenom=item.layer_min_scale_denom,
                 maxScaleDenom=item.layer_max_scale_denom,
                 drawOrderPosition=item.draw_order_position,
+                legendSymbols=ILegendSymbols.providedBy(style),
             )
 
             data['adapter'] = WebMapAdapter.registry.get(
