@@ -71,4 +71,5 @@ class WebMapComponent(Component):
         Option('annotation', bool, default=True, doc="Turn on / off annotations."),
         Option('enable_social_networks', bool, default=False),
         Option('check_origin', bool, default=False, doc="Check iframe Referer header."),
+        Option('legend_visible', str, default='off'),
     )
