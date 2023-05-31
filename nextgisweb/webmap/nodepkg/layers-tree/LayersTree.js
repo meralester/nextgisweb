@@ -8,6 +8,7 @@ import DescriptionIcon from "@material-icons/svg/description/outline";
 import EditIcon from "@material-icons/svg/edit/outline";
 
 import { DropdownActions } from "./DropdownActions";
+import { LegendAction, Legend } from "./Legend.js";
 import PropTypes from "prop-types";
 
 import "./LayersTree.less";
@@ -46,6 +47,11 @@ const handleWebMapItem = (webMapItem) => {
             } else {
                 return <DescriptionIcon />;
             }
+        };
+    }
+    if (webMapItem.legendSymbols) {
+        webMapItem.legendInfo = {
+            open: false,
         };
     }
 
@@ -94,7 +100,8 @@ export const LayersTree = observer(
                         <Col flex="auto" className="tree-item-title">
                             {title}
                         </Col>
-                        <Col flex="none">
+                        <Col flex="50px" className="tree-item-action">
+                            <LegendAction nodeData={nodeData} />
                             <DropdownActions
                                 nodeData={nodeData}
                                 getWebmapPlugins={getWebmapPlugins}
@@ -105,6 +112,7 @@ export const LayersTree = observer(
                             />
                         </Col>
                     </Row>
+                    <Legend nodeData={nodeData} />
                 </>
             );
         };

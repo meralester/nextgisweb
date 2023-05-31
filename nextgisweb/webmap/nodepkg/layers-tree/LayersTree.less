@@ -3,6 +3,11 @@
         display: flex;
         width: 100%;
         min-width: 0;
+        align-items: baseline;
+
+        &.ant-tree-node-selected {
+            background-color: transparent;
+        }
 
         .ant-tree-title {
             min-width: 0;
@@ -15,7 +20,14 @@
                 text-overflow: ellipsis;
             }
 
-            .more {
+            .tree-item-action {
+                flex-direction: row;
+                display: flex;
+                justify-content: end;
+            }
+
+            .more,
+            .legend {
                 width: 24px;
                 height: 24px;
                 display: flex;
