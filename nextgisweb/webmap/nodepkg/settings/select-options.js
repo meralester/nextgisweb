@@ -90,15 +90,19 @@ export const AddressGeocoderOptions = [
 
 export const LegendEnabledOptions = [
     {
-        label: i18n.gettext("Yes"),
+        label: i18n.gettext("Show"),
         value: "on"
     },
     {
-        label: i18n.gettext("No"),
+        label: i18n.gettext("Hide"),
         value: "off"
+    },
+    {
+        label: i18n.gettext("Disable"),
+        value: "disable"
     },
     {
         label: i18n.gettext("Default"),
         value: "default"
-    }
+    },
 ];

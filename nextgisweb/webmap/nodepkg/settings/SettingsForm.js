@@ -263,7 +263,7 @@ export const SettingsForm = ({
                 <Col span={8}>
                     <Form.Item
                         name="legend_visible"
-                        label={i18n.gettext("Show legend")}
+                        label={i18n.gettext("Visibility")}
                     >
                         <Select
                             options={LegendEnabledOptions}

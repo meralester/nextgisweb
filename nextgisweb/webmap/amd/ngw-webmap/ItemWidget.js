@@ -288,9 +288,10 @@ define([
             this.legendOptionsStore = new ObjectStore({
                 objectStore: new Memory({
                     data: [
+                        { id: "on", label: i18n.gettext("Show") },
+                        { id: "off", label: i18n.gettext("Hide") },
+                        { id: "disable", label: i18n.gettext("Disable") },
                         { id: "default", label: i18n.gettext("Default") },
-                        { id: "on", label: i18n.gettext("Yes") },
-                        { id: "off", label: i18n.gettext("No") }
                     ]
                 })
             });

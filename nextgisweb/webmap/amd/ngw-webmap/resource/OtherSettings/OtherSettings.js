@@ -51,11 +51,12 @@ define([
             
             _buildLegendSelect: function () {
                 this.selLegend = new Select({
-                    title: i18n.gettext("Show legend"),
+                    title: i18n.gettext("Legend"),
                     options: [
+                        {label: i18n.gettext("Show"), value: "on"},
+                        {label: i18n.gettext("Hide"), value: "off"},
+                        {label: i18n.gettext("Disable"), value: "disable"},
                         {label: i18n.gettext("Default"), value: "default"},
-                        {label: i18n.gettext("Yes"), value: "on"},
-                        {label: i18n.gettext("No"), value: "off"},
                     ]
                 });
                 this.tcControls.addChild(this.selLegend);

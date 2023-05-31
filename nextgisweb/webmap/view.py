@@ -76,11 +76,13 @@ def check_origin(request):
     return True
 
 
-def get_legend_visible_default():
-    if env.core.settings_get('webmap', 'legend_visible', 'default') != 'default':
-        legend_visible_default = env.core.settings_get('webmap', 'legend_visible')
+def get_legend_visible_default() -> str:
+    webmaps_legend_setting = env.core.settings_get('webmap', 'legend_visible', 'default')
+    if webmaps_legend_setting != 'default':
+        legend_visible_default = webmaps_legend_setting
     else:
-        legend_visible_default = 'on' if env.webmap.options['legend_visible'] else 'off'
+        config_legend_setting = env.webmap.options['legend_visible']
+        legend_visible_default = 'on' if config_legend_setting else 'disabled'
     return legend_visible_default
 
 
@@ -92,7 +94,7 @@ def get_legend_info(webmap: WebMap, webmap_item: WebMapItem, style, visible_defa
 
     legend_info = dict(visible=legend_visible)
 
-    if legend_visible == 'on':
+    if legend_visible == 'on' or legend_visible == 'off':
         has_legend = ILegendSymbols.providedBy(style)
         legend_info.update(dict(has_legend=has_legend))
         if has_legend:
@@ -101,7 +103,7 @@ def get_legend_info(webmap: WebMap, webmap_item: WebMapItem, style, visible_defa
             is_single = len(legend_symbols) == 1
             legend_info.update(dict(single=is_single))
             if not is_single:
-                legend_info.update(dict(open=True))
+                legend_info.update(dict(open=legend_visible == 'on'))
 
     return legend_info
 
