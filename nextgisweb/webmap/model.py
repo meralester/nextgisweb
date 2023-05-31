@@ -53,7 +53,7 @@ class WebMap(Base, Resource):
 
     annotation_enabled = db.Column(db.Boolean, nullable=False, default=False)
     annotation_default = db.Column(db.Enum(*ANNOTATIONS_DEFAULT_VALUES), nullable=False, default='no')
-    legend_visible = db.Column(db.Enum('default', 'on', 'off'), nullable=False)
+    legend_visible = db.Column(db.Enum('default', 'on', 'off'), nullable=False, default='default')
 
     root_item = db.relationship('WebMapItem', cascade='all')
 
@@ -149,7 +149,7 @@ class WebMapItem(Base):
         backref=db.backref('webmap_items', cascade='all')
     )
 
-    legend_visible = db.Column(db.Enum('default', 'on', 'off'), nullable=True)
+    legend_visible = db.Column(db.Enum('default', 'on', 'off'), nullable=True, default='default')
 
     def to_dict(self):
         if self.item_type in ('root', 'group'):
