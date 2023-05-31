@@ -59,20 +59,26 @@ export function Legend({
         legend = <>
             {
                 legendInfo.symbols.map((s, idx) => (
-                    <div key={idx} className="legend-symbol">
-                        <img width={24} height={24} src={"data:image/png;base64," + s.icon.data}/>
-                        <div>{s.display_name}</div>
+                    <div
+                        key={idx}
+                        className="legend-symbol"
+                        title={s.display_name}
+                    >
+                        <img width={15} height={15} src={"data:image/png;base64," + s.icon.data}/>
+                        <div className="legend-title">{s.display_name}</div>
                     </div>
                 ))
             }
         </>;
     }
 
-    return <Row wrap={false}>
-        <Col flex="auto">
-            {legend}
-        </Col>
-    </Row>;
+    return <div className="legend-block">
+        <Row wrap={false}>
+            <Col flex="auto">
+                {legend}
+            </Col>
+        </Row>
+    </div>;
 }
 
 LegendAction.propTypes = {
