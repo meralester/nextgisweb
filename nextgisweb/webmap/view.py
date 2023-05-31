@@ -76,16 +76,19 @@ def check_origin(request):
     return True
 
 
-def get_legend_info(webmap: WebMap, webmap_item: WebMapItem, style):
+def get_legend_visible_default():
+    if env.core.settings_get('webmap', 'legend_visible', 'default') != 'default':
+        legend_visible_default = env.core.settings_get('webmap', 'legend_visible')
+    else:
+        legend_visible_default = 'on' if env.webmap.options['legend_visible'] else 'off'
+    return legend_visible_default
+
+
+def get_legend_info(webmap: WebMap, webmap_item: WebMapItem, style, visible_default: str):
     legend_visible = webmap_item.legend_visible
 
     if legend_visible == 'default':
-        if webmap.legend_visible != 'default':
-            legend_visible = webmap.legend_visible
-        elif env.core.settings_get('webmap', 'legend_visible') != 'default':
-            legend_visible = env.core.settings_get('webmap', 'legend_visible')
-        else:
-            legend_visible = 'on' if env.webmap.options['legend_visible'] else 'off'
+        legend_visible = webmap.legend_visible if webmap.legend_visible != 'default' else visible_default
 
     legend_info = dict(visible=legend_visible)
 
@@ -95,7 +98,7 @@ def get_legend_info(webmap: WebMap, webmap_item: WebMapItem, style):
         if has_legend:
             legend_symbols = legend_symbols_by_resource(style, 15)
             legend_info.update(dict(symbols=legend_symbols))
-            is_single = len(legend_symbols) == 1 and legend_symbols[0]['display_name'] == ''
+            is_single = len(legend_symbols) == 1
             legend_info.update(dict(single=is_single))
             if not is_single:
                 legend_info.update(dict(open=True))
@@ -130,6 +133,8 @@ def display(obj, request):
         'expanded': [],
         'checked': []
     }
+
+    legend_visible_default = get_legend_visible_default()
 
     def traverse(item):
         data = dict(
@@ -173,7 +178,7 @@ def display(obj, request):
                 minScaleDenom=item.layer_min_scale_denom,
                 maxScaleDenom=item.layer_max_scale_denom,
                 drawOrderPosition=item.draw_order_position,
-                legendInfo=get_legend_info(obj, item, style),
+                legendInfo=get_legend_info(obj, item, style, legend_visible_default),
             )
 
             data['adapter'] = WebMapAdapter.registry.get(
