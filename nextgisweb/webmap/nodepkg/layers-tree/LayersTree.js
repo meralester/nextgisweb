@@ -43,7 +43,7 @@ const handleWebMapItem = (webMapItem) => {
         webMapItem.isLeaf = true;
 
         if (webMapItem.legendInfo) {
-            const {legendInfo} = webMapItem;
+            const { legendInfo } = webMapItem;
             if (legendInfo.visible && legendInfo.single) {
                 webMapItem.legendIcon = <img
                     width={15}
