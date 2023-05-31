@@ -54,6 +54,9 @@ def tile_debug_info(img, offset=(0, 0), color='black',
     return img
 
 
+image_encoder = image_encoder_factory(FORMAT_PNG, COMPRESSION_FAST)
+
+
 def image_response(img, empty_code, size):
     if img is None:
         if empty_code in ('204', '404'):
@@ -343,7 +346,7 @@ def legend_symbols_by_resource(resource, icon_size: int):
     return result
 
 
-def legend_symbols(request):
+def legend_symbols(request) -> JSONType:
     request.resource_permission(PD_READ)
     icon_size = int(request.GET.get('icon_size', '24'))
     return legend_symbols_by_resource(request.context, icon_size)
