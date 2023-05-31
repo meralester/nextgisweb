@@ -87,3 +87,18 @@ export const AddressGeocoderOptions = [
         value: "yandex",
     },
 ];
+
+export const LegendEnabledOptions = [
+    {
+        label: i18n.gettext("Yes"),
+        value: "on"
+    },
+    {
+        label: i18n.gettext("No"),
+        value: "off"
+    },
+    {
+        label: i18n.gettext("Default"),
+        value: "default"
+    }
+];

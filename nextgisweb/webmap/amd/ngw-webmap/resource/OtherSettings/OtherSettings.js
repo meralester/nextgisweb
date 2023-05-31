@@ -45,7 +45,20 @@ define([
             postCreate: function () {
                 this.inherited(arguments);
 
+                this._buildLegendSelect();
                 if (settingsWebmap.annotation) this._buildAnnotationsControls();
+            },
+            
+            _buildLegendSelect: function () {
+                this.selLegend = new Select({
+                    title: i18n.gettext("Show legend"),
+                    options: [
+                        {label: i18n.gettext("Default"), value: "default"},
+                        {label: i18n.gettext("Yes"), value: "on"},
+                        {label: i18n.gettext("No"), value: "off"},
+                    ]
+                });
+                this.tcControls.addChild(this.selLegend);
             },
 
             _buildAnnotationsControls: function () {
@@ -71,6 +84,7 @@ define([
                 }
                 var value = data.webmap;
                 value.editable = this.chbEditable.get("checked");
+                value.legend_visible = this.selLegend.get("value");
 
                 if (settingsWebmap.annotation) {
                     value.annotation_enabled = this.chbAnnotationEnabled.get("checked");
@@ -81,6 +95,7 @@ define([
             deserializeInMixin: function (data) {
                 var value = data.webmap;
                 this.chbEditable.set("checked", value.editable);
+                this.selLegend.set("value", value.legend_visible);
 
                 if (settingsWebmap.annotation) {
                     this.chbAnnotationEnabled.set(

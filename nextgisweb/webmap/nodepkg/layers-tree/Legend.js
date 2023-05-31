@@ -17,7 +17,8 @@ export function LegendAction({
                                  nodeData,
                                  onClick
                              }) {
-    if (!nodeData || !nodeData.legendInfo) {
+    if (!nodeData || !nodeData.legendInfo ||
+        nodeData.legendInfo.open === undefined) {
         return <></>;
     }
 
@@ -28,7 +29,6 @@ export function LegendAction({
         const { id } = nodeData;
         const { open } = nodeData.legendInfo;
         nodeData.legendInfo.open = !open;
-
         onClick(id);
     };
 
@@ -47,37 +47,18 @@ export function LegendAction({
 export function Legend({
                            nodeData
                        }) {
-
-
-    const [legendData, setLegendData] = useState(undefined);
-
-    const { open } = nodeData.legendInfo ?? {};
-
-    useEffect(async () => {
-        if (!open || legendData) {
-            return;
-        }
-
-        const { styleId } = nodeData;
-        const getSymbols = route("render.legend_symbols", styleId).get();
-        const minTime = new Promise(r => setTimeout(r, 1000));
-        const symbols = await Promise.all([getSymbols, minTime]);
-        setLegendData(symbols[0]);
-    }, [open]);
-
-    if (!nodeData || !nodeData.legendInfo) {
+    if (!nodeData || !nodeData.legendInfo ||
+        !nodeData.legendInfo.open) {
         return <></>;
     }
 
-    if (!open) {
-        return <></>;
-    }
+    const { legendInfo } = nodeData;
 
     let legend;
-    if (legendData) {
+    if (legendInfo.symbols) {
         legend = <>
             {
-                legendData.map((s, idx) => (
+                legendInfo.symbols.map((s, idx) => (
                     <div key={idx} className="legend-symbol">
                         <img width={24} height={24} src={"data:image/png;base64," + s.icon.data}/>
                         <div>{s.display_name}</div>
@@ -85,12 +66,6 @@ export function Legend({
                 ))
             }
         </>;
-    } else {
-        legend = (
-            <div className="linear-activity">
-                <div className="indeterminate"></div>
-            </div>
-        );
     }
 
     return <Row wrap={false}>
