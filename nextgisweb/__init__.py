@@ -41,6 +41,7 @@ def pkginfo():
         'wfsclient',
         'wmsclient',
         'wmsserver',
+        'oapifserver',
         'tmsclient',
         'file_upload',
         'audit',
@@ -116,4 +117,5 @@ def amd_packages():
         ('ngw-spatial-ref-sys', 'nextgisweb:spatial_ref_sys/amd/ngw-spatial-ref-sys'),
         ('ngw-render', 'nextgisweb:render/amd/ngw-render'),
         ('ngw-audit', 'nextgisweb:audit/amd/ngw-audit'),
+        ('ngw-oapifserver', 'nextgisweb:oapifserver/amd/ngw-oapifserver'),
     )
